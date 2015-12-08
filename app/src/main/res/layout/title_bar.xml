@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/global_title_bar_mid"
+    android:background="@color/bg_color_title1" >
+
+    <LinearLayout
+        android:id="@+id/ll_back"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/global_title_bar_mid"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_margin_mid"
+            android:src="@drawable/dou361_back_selector" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_margin_small"
+            android:layout_marginRight="@dimen/global_margin_mid"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/global_text_size_mid" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_center"
+
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/global_title_bar_mid"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_margin_small"
+            android:layout_marginRight="@dimen/global_margin_small"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/global_text_size_mid" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/global_title_bar_big"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_margin_small"
+            android:layout_marginRight="@dimen/global_margin_small"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/global_text_size_mid" />
+    </LinearLayout>
+
+</RelativeLayout>

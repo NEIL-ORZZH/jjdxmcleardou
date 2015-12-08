@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--标题栏高度-->
+    <dimen name="global_title_bar_big">56dp</dimen>
+    <dimen name="global_title_bar_mid">48dp</dimen>
+    <dimen name="global_title_bar_small">36dp</dimen>
+
+    <!--外压边距大小-->
+    <dimen name="global_margin_large">36dp</dimen>
+    <dimen name="global_margin_big">24dp</dimen>
+    <dimen name="global_margin_mid">14dp</dimen>
+    <dimen name="global_margin_small">6dp</dimen>
+
+    <!--字体大小-->
+    <!--特大22sp-->
+    <dimen name="global_text_size_large">36dp</dimen>
+    <!--大号18sp-->
+    <dimen name="global_text_size_big">30dp</dimen>
+    <!--中号14sp-->
+    <dimen name="global_text_size_mid">24dp</dimen>
+    <!--小号12sp-->
+    <dimen name="global_text_size_small">20dp</dimen>
+
+</resources>

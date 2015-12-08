@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="bg_color_normal" type="color">#00ffffff</item>
+    <item name="bg_color_press" type="color">#ffeeeeee</item>
+    <item name="bg_color_unable" type="color">#ff2d353f</item>
+    <item name="bg_color_divide" type="color">#ff243040</item>
+    <item name="bg_color_bottom" type="color">#ff1e2733</item>
+    <item name="bg_color_title1" type="color">#ff1e2733</item>
+    <item name="bg_color_title2" type="color">#ff1e2733</item>
+    <item name="bg_color_title3" type="color">#ff1e2733</item>
+    <item name="bg_color_title4" type="color">#ff1e2733</item>
+    <item name="bg_color_title5" type="color">#ff1e2733</item>
+    <item name="bg_color_title6" type="color">#ff1e2733</item>
+    <item name="bg_color_title7" type="color">#ff1e2733</item>
+
+</resources>
