@@ -2,19 +2,21 @@ package com.dou361.quickscan.ui;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.dou361.note.view.annotation.ViewInject;
 import com.dou361.quickscan.R;
 import com.dou361.quickscan.base.BaseActivity;
+import com.dou361.quickscan.bean.EventTypeBean;
 import com.dou361.quickscan.service.CleanerService;
 import com.dou361.quickscan.service.CoreService;
-import com.dou361.quickscan.utils.SharedPreferencesUtils;
+import com.dou361.quickscan.utils.Constants;
+import com.dou361.quickscan.utils.LogUtils;
+import com.dou361.quickscan.utils.SPUtils;
+import com.dou361.quickscan.utils.StatusConfig;
+import com.dou361.quickscan.utils.SystemUtils;
 
-import java.util.Random;
+import de.greenrobot.event.EventBus;
 
 /**
  * ========================================
@@ -38,42 +40,63 @@ import java.util.Random;
  */
 public class SplishActivity extends BaseActivity {
 
-    /**
-     * 三个切换的动画
-     */
-    private Animation mFadeIn;
-    private Animation mFadeInScale;
-    private Animation mFadeOut;
-
-    //  @InjectView(R.id.image)
-    ImageView mImageView;
-
     public static final String ACTION_INSTALL_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
+
+
+    /**
+     * 加载数据状态参数
+     */
+    private boolean[] loadDataArrs = new boolean[5];
+
+    @Override
+    public void onEventMainThread(EventTypeBean event) {
+        if (mFgState) {
+            LogUtils.tag(TAG).log("SplashActivity------" + event.what);
+            switch (event.what) {
+                case StatusConfig.SEND_01:
+                    /**
+                     * 判断当前的用户是不是第一次使用app，如果是第一次使用那么就跳入到引导界面，如果不是第一次，就跳到主界面
+                     */
+                    if ((boolean) SPUtils.getData(mContext, Constants.ISFIRST,
+                            false)) {
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        startActivity(intent);
+                        onBackPressed();
+                    } else {
+                        Intent intent = new Intent(mContext, GuideActivity.class);
+                        startActivity(intent);
+                        SPUtils.putData(mContext, Constants.ISFIRST,
+                                true);
+                        onBackPressed();
+                    }
+                    break;
+            }
+        }
+    }
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_splish);
-        mImageView = (ImageView) findViewById(R.id.image);
-        int index = new Random().nextInt(2);
-        if (index == 1) {
-            mImageView.setImageResource(R.drawable.entrance3);
-        } else {
-            mImageView.setImageResource(R.drawable.entrance2);
-        }
         startService(new Intent(this, CoreService.class));
         startService(new Intent(this, CleanerService.class));
-
-
-        if (!SharedPreferencesUtils.isShortCut(mContext)) {
+        if (!(boolean) SPUtils.getData(mContext,
+                Constants.ISSHORTCUT, false)) {
             createShortCut();
         }
+        /** 应用上一次启动的版本号 */
+        int preVersion = (int) SPUtils.getData(mContext,
+                Constants.PREVERSION, 0);
 
-        initAnim();
-        setListener();
+        if (preVersion < SystemUtils.getVersionCode(mContext)) {
+            /** 如果应用更新版本了，则重新调用向导页面 */
+            SPUtils.putData(mContext, Constants.PREVERSION,
+                    SystemUtils.getVersionCode(mContext));
+            SPUtils.remove(mContext, Constants.ISFIRST);
+        }
+        goToActivity();
     }
 
     private void createShortCut() {
-        // TODO Auto-generated method stub
         Intent intent = new Intent();
         intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "一键加速");
@@ -84,72 +107,25 @@ public class SplishActivity extends BaseActivity {
         i.addCategory("android.intent.category.DEFAULT");
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
         sendBroadcast(intent);
-        SharedPreferencesUtils.setIsShortCut(mContext, true);
+        SPUtils.putData(mContext, Constants.ISSHORTCUT, true);
     }
-
-    private void initAnim() {
-        mFadeIn = AnimationUtils.loadAnimation(this, R.anim.welcome_fade_in);
-        mFadeIn.setDuration(500);
-        mFadeInScale = AnimationUtils.loadAnimation(this,
-                R.anim.welcome_fade_in_scale);
-        mFadeInScale.setDuration(2000);
-        mFadeOut = AnimationUtils.loadAnimation(this, R.anim.welcome_fade_out);
-        mFadeOut.setDuration(500);
-        mImageView.startAnimation(mFadeIn);
-    }
-
 
     /**
-     * 监听事件
+     * 发一个延迟消息进行页面跳转
      */
-    public void setListener() {
-        /**
-         * 动画切换原理:开始时是用第一个渐现动画,当第一个动画结束时开始第二个放大动画,当第二个动画结束时调用第三个渐隐动画,
-         * 第三个动画结束时修改显示的内容并且重新调用第一个动画,从而达到循环效果
-         */
-        mFadeIn.setAnimationListener(new AnimationListener() {
-
-            public void onAnimationStart(Animation animation) {
-
+    private void goToActivity() {
+        new Thread() {
+            public void run() {
+                try {
+                    /**  模拟延时 */
+                    Thread.sleep(1000);
+                    /**  发布事件，在后台线程发的事件 */
+                    EventBus.getDefault().post(new EventTypeBean(StatusConfig.SEND_01));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-
-            public void onAnimationEnd(Animation animation) {
-                mImageView.startAnimation(mFadeInScale);
-            }
-        });
-        mFadeInScale.setAnimationListener(new AnimationListener() {
-
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-
-            public void onAnimationEnd(Animation animation) {
-                startActivity(MainActivity.class);
-                finish();
-                // mImageView.startAnimation(mFadeOut);
-            }
-        });
-        mFadeOut.setAnimationListener(new AnimationListener() {
-
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-
-            public void onAnimationEnd(Animation animation) {
-                // startActivity(MainActivity.class);
-            }
-        });
+        }.start();
     }
+
 }

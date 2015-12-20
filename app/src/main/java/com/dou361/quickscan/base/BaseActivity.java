@@ -90,6 +90,7 @@ public abstract class BaseActivity extends FragmentActivity {
      * 判断当前Activity是否是显示true为onResume()之后 false为onPause()之后
      */
     protected boolean mFgState;
+    protected String TAG = this.getClass().getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.dou361.quickscan"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0.0.20151209.01"
+        versionCode 3
+        versionName "1.0.0.151220.03"
     }
     buildTypes {
         release {

@@ -188,11 +188,11 @@ public class CoreService extends Service {
                             Drawable icon = appInfo.loadIcon(packageManager);
                             abAppProcessInfo.icon = icon;
                         }else{
-                            abAppProcessInfo.icon = mContext.getResources().getDrawable(R.drawable.ic_launcher);
+                            abAppProcessInfo.icon = mContext.getResources().getDrawable(R.mipmap.app_icon);
                         }
 
                     }else{
-                        abAppProcessInfo.icon = mContext.getResources().getDrawable(R.drawable.ic_launcher);
+                        abAppProcessInfo.icon = mContext.getResources().getDrawable(R.mipmap.app_icon);
                     }
                     abAppProcessInfo.isSystem = true;
                     abAppProcessInfo.appName = appProcessInfo.processName;

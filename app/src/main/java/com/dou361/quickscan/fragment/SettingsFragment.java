@@ -107,9 +107,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 }
             });
         } else if ("pVersionDetail".equals(preference.getKey())) {
-            VersionFragment.launch(getActivity());
+//            VersionFragment.launch(getActivity());
         } else if ("pGithub".equals(preference.getKey())) {
-            Utils.launchBrowser(getActivity(), "https://github.com/joyoyao/superCleanMaster");
+            Utils.launchBrowser(getActivity(), "http://dou361.com");
         }else if ("pGrade".equals(preference.getKey())) {
             startMarket();
         }else if ("pShare".equals(preference.getKey())) {
@@ -124,7 +124,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private void shareMyApp() {
 
         UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share", RequestType.SOCIAL);
-        mController.setShareContent("一键清理（开源版）一键清理手机进程，真心不错呀,推荐您使用！.");
+        mController.setShareContent("清理豆 一键清理手机进程，真心不错呀,推荐您使用！.");
         mController.openShare(getActivity(), false);
 
     }
@@ -163,16 +163,16 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
 
     public  void startMarket() {
-        Uri uri = Uri.parse(String.format("market://details?id=%s", AppUtil.getPackageInfo(getActivity()).packageName));
-        if (Utils.isIntentSafe(getActivity(), uri)) {
+        Uri uri = Uri.parse(String.format("market://details?id=%s","com.dou361.mobilesafe"/* AppUtil.getPackageInfo(getActivity()).packageName*/));
+//        if (Utils.isIntentSafe(getActivity(), uri)) {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getActivity().startActivity(intent);
-        }
-        // 没有安装市场
-        else {
-            T.showLong(getActivity(),"无法打开应用市场");
+//        }
 
-        }
+//        else {//没有安装市场
+//            T.showLong(getActivity(),"无法打开应用市场");
+//
+//        }
     }
 }

@@ -2,6 +2,7 @@ package com.dou361.quickscan.ui;
 
 import android.os.Bundle;
 import android.text.util.Linkify;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.dou361.note.view.annotation.ViewInject;
@@ -46,6 +47,16 @@ public class AboutActivity extends BaseSwipeBackActivity {
 
         subVersion.setText("V" + AppUtil.getVersion(mContext));
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

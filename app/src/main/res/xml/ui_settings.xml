@@ -30,8 +30,8 @@
             android:title="@string/settings_version_update" />
         <Preference
             android:key="pGithub"
-            android:title="Github"
-            android:summary="github.com/joyoyao/superCleanMaster"
+            android:title="dou361.com"
+            android:summary="http://dou361.com"
             />
 
         <Preference

@@ -64,6 +64,7 @@ public class NavigationDrawerFragment extends BaseFragment {
             radios[i] = (RadioButton) getView().findViewById(radioIds[i]);
             radios[i].setOnClickListener(clickItem);
         }
+        radios[1].setVisibility(View.GONE);
     }
 
 

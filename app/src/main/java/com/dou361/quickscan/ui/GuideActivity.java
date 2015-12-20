@@ -6,15 +6,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 import com.dou361.note.view.ViewUtils;
 import com.dou361.note.view.annotation.ViewInject;
 import com.dou361.quickscan.R;
 import com.dou361.quickscan.adapter.GuideActivityAdapter;
 import com.dou361.quickscan.base.BaseActivity;
+import com.dou361.quickscan.widget.IndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.List;
 /**
  * ========================================
  * <p/>
- * 版 权：深圳市晶网科技控股有限公司 版权所有 （C） 2015
+ * 版 权：dou361 版权所有 （C） 2015
  * <p/>
  * 作 者：陈冠明
  * <p/>
@@ -47,11 +50,14 @@ public class GuideActivity extends BaseActivity implements
      */
     @ViewInject(R.id.view_pager)
     private ViewPager view_pager;
+    @ViewInject(R.id.ll_indicator)
+    private LinearLayout ll_indicator;
     /**
      * 进入主页面按钮
      */
     @ViewInject(R.id.btn_experience)
     private Button btn_experience;
+    private IndicatorView mIndicator;
     /**
      * 图片列表
      */
@@ -61,6 +67,15 @@ public class GuideActivity extends BaseActivity implements
     protected void initView() {
         setContentView(R.layout.activity_guide);
         ViewUtils.inject(this);
+
+
+        mIndicator = new IndicatorView(mContext);
+        // 设置点和点之间的间隙
+        mIndicator.setInterval(10);
+        // 设置点的图片
+        mIndicator.setIndicatorDrawable(mContext.getResources().getDrawable(R.drawable.indicator_selector));
+        mIndicator.setSelection(0);
+        ll_indicator.addView(mIndicator);
         view_pager.setOnPageChangeListener(this);
         btn_experience.setOnClickListener(this);
         TypedArray icons = mContext.getResources().obtainTypedArray(R.array.guide_picture);
@@ -77,6 +92,7 @@ public class GuideActivity extends BaseActivity implements
         }
         GuideActivityAdapter adapter = new GuideActivityAdapter(imageLists);
         view_pager.setAdapter(adapter);
+        mIndicator.setCount(imageLists.size());
     }
 
     @Override
@@ -102,6 +118,7 @@ public class GuideActivity extends BaseActivity implements
 
     @Override
     public void onPageSelected(int position) {
+        mIndicator.setSelection(position);
         /** 最后一张 */
         if (position == imageLists.size() - 1) {
             btn_experience.setVisibility(View.VISIBLE);

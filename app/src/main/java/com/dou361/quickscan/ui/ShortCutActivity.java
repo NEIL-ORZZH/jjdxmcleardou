@@ -143,7 +143,7 @@ public class ShortCutActivity extends BaseActivity implements CoreService.OnPeoc
     @Override
     public void onCleanCompleted(Context context, long cacheSize) {
         if (cacheSize > 0) {
-            T.showLong(mContext, "一键清理 开源版,为您释放" + StorageUtil.convertStorage(cacheSize) + "内存");
+            T.showLong(mContext, "一键加速,为您释放" + StorageUtil.convertStorage(cacheSize) + "内存");
         } else {
             T.showLong(mContext, "您刚刚清理过内存,请稍后再来~");
         }
